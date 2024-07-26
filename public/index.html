@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WebSocket Buttons</title>
+    <style>
+        body,
+        html {
+            height: 100%;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .grid-container {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            grid-template-rows: repeat(4, 1fr);
+            gap: 10px;
+            height: 100%;
+        }
+
+        .grid-item {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+            color: white;
+            font-size: 20vw;
+            cursor: pointer;
+            width: 100%;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="grid-container">
+        <div class="grid-item" style="background-color: #000;color:#FFF;" onclick="sendMessage(1)">black</div>
+        <div class="grid-item" style="background-color: #d3d2d2;color:#000;"onclick="sendMessage(2)">white</div>
+        <div class="grid-item" style="background-color: #ff0000;color:#FFF;"onclick="sendMessage(3)">red</div>
+        <div class="grid-item" style="background-color: #ffc403;color:#FFF;"onclick="sendMessage(4)">yello</div>
+        <div class="grid-item" style="background-color: #00ff22;color:#FFF;"onclick="sendMessage(5)">green</div>
+        <div class="grid-item" style="background-color: #00c3ff;color:#FFF;"onclick="sendMessage(6)">cyan</div>
+        <div class="grid-item" style="background-color: #0004ff;color:#FFF;"onclick="sendMessage(7)">blue</div>
+        <div class="grid-item" style="background-color: #ae00ff;color:#FFF;"onclick="sendMessage(8)">purple</div>
+
+    </div>
+
+    <script>
+        const ws = new WebSocket('ws://localhost:3000');
+
+        ws.onopen = () => {
+            console.log('WebSocket is connected');
+        };
+
+        ws.onmessage = (event) => {
+            console.log(`Received message from server: ${event.data}`);
+        };
+
+        ws.onclose = () => {
+            console.log('WebSocket is closed');
+        };
+
+        function sendMessage(buttonNumber) {
+            ws.send(buttonNumber);
+        }
+    </script>
+</body>
+
+</html>
